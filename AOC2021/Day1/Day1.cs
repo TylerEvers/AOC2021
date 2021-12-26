@@ -8,6 +8,7 @@ public class AOCDay1
     {
         var lstDepths = ReadFile();
         CalculateIncreases(lstDepths);
+        CalculateWindowIncreases(lstDepths);
     }
 
     private static void CalculateIncreases(List<int> lstDepths)
@@ -23,6 +24,24 @@ public class AOCDay1
             }
 
             intPrev = depth;
+        }
+
+        Console.WriteLine($"Answer: {intIncreasesCount}");
+    }
+
+    private static void CalculateWindowIncreases(List<int> lstDepths)
+    {
+        var intIncreasesCount = 0;
+        var intCurrIndex = 0;
+
+        while (intCurrIndex + 3 < lstDepths.Count)
+        {
+            if (lstDepths.GetRange(intCurrIndex + 1, 3).Sum() > lstDepths.GetRange(intCurrIndex, 3).Sum())
+            {
+                intIncreasesCount++;
+            }
+
+            intCurrIndex++;
         }
 
         Console.WriteLine($"Answer: {intIncreasesCount}");
