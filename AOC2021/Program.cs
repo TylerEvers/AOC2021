@@ -10,6 +10,9 @@ namespace AOC2021
 
             Console.WriteLine("Day 1");
             AOCDay1.Day1();
+
+            Console.WriteLine("Day 2");
+            AOCDay2.Day2();
         }
     }
 }
