@@ -57,7 +57,7 @@ public class AOCDay3
             //O2
             if (arrO2.Count() > 1)
             {
-                if ((arrO2.Count(x => x.Substring(i, 1).Contains("1")) > arrO2.Count() / 2))
+                if ((arrO2.Count(x => x.Substring(i, 1).Contains("1")) >= arrO2.Count() / 2.0))
                 {
                     arrO2 = arrO2.Where(x => x.Substring(i, 1).Contains("1")).ToArray();
                 }
@@ -70,7 +70,7 @@ public class AOCDay3
             //CO2
             if (arrCO2.Count() > 1)
             {
-                if ((arrCO2.Count(x => x.Substring(i, 1).Contains("1")) > arrCO2.Count() / 2))
+                if ((arrCO2.Count(x => x.Substring(i, 1).Contains("1")) >= arrCO2.Count() / 2.0))
                 {
                     arrCO2 = arrCO2.Where(x => x.Substring(i, 1).Contains("0")).ToArray();
                 }
