@@ -9,13 +9,16 @@ namespace AOC2021
             Console.WriteLine("Advent of Code - 2021!");
 
             Console.WriteLine("Day 1");
-            AOCDay1.Day1();
+            //AOCDay1.Day1();
 
             Console.WriteLine("Day 2");
-            AOCDay2.Day2();
+            //AOCDay2.Day2();
 
             Console.WriteLine("Day 3");
-            AOCDay3.Day3();
+            //AOCDay3.Day3();
+
+            Console.WriteLine("Day 3");
+            AOCDay4.Day4();
         }
     }
 }

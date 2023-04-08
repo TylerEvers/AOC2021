@@ -9,6 +9,7 @@
     <Content Include="bin\Debug\Day1.txt" />
     <Content Include="bin\Debug\Day2.txt" />
     <Content Include="bin\Debug\Day3.txt" />
+    <Content Include="bin\Debug\Day4.txt" />
   </ItemGroup>
 
 </Project>
