@@ -34,7 +34,7 @@ public class AOCDay4
                 //Column
                 for (int col = 1; col <= 5; col++)
                 {
-                    var boardValue = new Bingo(boardNumber, col, row, int.Parse(arrRow.Substring((col-1)*3,2)), false); 
+                    var boardValue = new Bingo(boardNumber, col, row, int.Parse(arrRow.Substring((col-1)*3,2)), false, false); 
                     boards.Add(boardValue);
                 }
             }
@@ -45,36 +45,60 @@ public class AOCDay4
 
     public static void PlayBingo(List<int> inputs, List<Bingo> boards)
     {
+        int? firstWinner = null;
+        int? lastWinner = null;
+
+        //Loop through inputs
         for (int i = 0; i < inputs.Count; i++)
         {
             int value = inputs[i];
-            boards.Where(x => x.Value == value).ToList().ForEach(y => y.Marked = true);
 
-            //Get first winning board
+            //Mark Boards
+            boards.Where(x => x.Value == value && !x.isBingo)
+                .ToList()
+                .ForEach(y => y.Marked = true);
+
             if (i >=4)
             {
-                var rowWinner = boards.Where(x => x.Marked == true)
-                    .GroupBy(g => new { g.BoardNumber, g.Row})
-                    .Where(x => x.Count() == 5)
-                    .ToList();
+                var winningBoards = new List<int>();
 
-                var colWinner = boards.Where(x => x.Marked == true)
+                winningBoards.AddRange(boards.Where(x => x.Marked && !x.isBingo)
+                    .GroupBy(g => new { g.BoardNumber, g.Row })
+                    .Where(x => x.Count() == 5)
+                    .SelectMany(group => group.Select(x => x.BoardNumber))
+                    .Distinct()
+                    .ToList());
+
+                winningBoards.AddRange(boards.Where(x => x.Marked && !x.isBingo)
                     .GroupBy(g => new { g.BoardNumber, g.Column })
                     .Where(x => x.Count() == 5)
-                    .ToList();
+                    .SelectMany(group => group.Select(x => x.BoardNumber))
+                    .Distinct()
+                    .ToList());
 
-                if (rowWinner.Count() > 0 || colWinner.Count() > 0)
+                foreach (var boardNumber in winningBoards)
                 {
-                    int winningBoard = rowWinner.Count() > 0 ? rowWinner[0].First().BoardNumber : colWinner[0].First().BoardNumber;
-                    int sum = boards.Where(x => x.BoardNumber == winningBoard && x.Marked == false).Sum(x => x.Value);
+                    //Bingo!
+                    boards.Where(x => x.BoardNumber == boardNumber && !x.isBingo)
+                        .ToList()
+                        .ForEach(y => y.isBingo = true);
 
-                    //Print Output
-                    Console.WriteLine($"Answer: {sum * value}");
-                }   
+                    if (firstWinner == null)
+                    {
+                        firstWinner = SumBoard(boards, boardNumber) * value;
+                    } else
+                    {
+                        lastWinner = SumBoard(boards, boardNumber) * value;
+                    }
+                }
             }
-
-            //TODO: Get last winning board
         }
+        Console.Write($"First Winner: {firstWinner}, Last Winner: {lastWinner}");
+    }
+
+    public static int SumBoard(List<Bingo> boards, int boardNumber)
+    {
+        return boards.Where(x => x.BoardNumber == boardNumber && x.Marked == false).Sum(x => x.Value);
     }
 }
 

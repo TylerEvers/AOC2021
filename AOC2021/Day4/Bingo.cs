@@ -11,16 +11,18 @@ public class Bingo
     public int Row { get; set; }
     public int Value { get; set; }
     public bool Marked { get; set; }
+    public bool isBingo { get; set; } = false;
     
     public Bingo() { }
 
-    public Bingo(int boardNumber, int column, int row, int value, bool marked)
+    public Bingo(int boardNumber, int column, int row, int value, bool marked, bool bingo)
     {
         BoardNumber = boardNumber;
         Column = column;
         Row = row;
         Value = value;
         Marked = marked;
+        isBingo = bingo;
     }
 }
 
